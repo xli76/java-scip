@@ -1,0 +1,10 @@
+services:
+#  java-app:
+#    build:
+#      context: .
+#      dockerfile: docker/Dockerfile.app
+
+  scip-dep:
+    build:
+      context: docker/dep
+      dockerfile: Dockerfile.dep
