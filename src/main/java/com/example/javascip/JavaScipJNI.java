@@ -6,6 +6,7 @@ public class JavaScipJNI {
     {
         // load generated C-library
         System.loadLibrary("jscip");
+//        System.load("/Users/xin/Workspace/java-scip/src/main/resources/lib/libjscip.dylib");
 
         Scip scip = new Scip();
 
