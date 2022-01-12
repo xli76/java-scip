@@ -1,13 +1,15 @@
 package com.example.javascip;
 import jscip.*;
+import org.springframework.stereotype.Component;
 
-public class JavaScipJNI {
-    public static void main(String args[])
-    {
+@Component
+public class ScipSolver {
+    static {
         // load generated C-library
         System.loadLibrary("jscip");
-//        System.load("/Users/xin/Workspace/java-scip/src/main/resources/lib/libjscip.dylib");
+    }
 
+    public void solve() {
         Scip scip = new Scip();
 
         // set up data structures of SCIP
