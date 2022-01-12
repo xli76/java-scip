@@ -46,13 +46,22 @@ COPY --from=java-scip /scip/scipoptsuite-7.0.2/build/lib/libscip.so.7.0 /home/gr
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/home/gradle/src/src/main/resources/lib"
 RUN gradle build --no-daemon
 
-# FROM openjdk:17-alpine AS app
+FROM openjdk:17-alpine AS app
 
-# EXPOSE 8080
+EXPOSE 8080
 
-# WORKDIR /app
+WORKDIR /app
 
-# # COPY --from=build /home/gradle/src/algo-model-allocation-service/build/libs/*.jar .
-# # COPY --from=build /home/gradle/src/start-docker.sh .
+COPY --from=build /home/gradle/src/build/libs/java-scip-0.0.1-SNAPSHOT.jar .
+COPY --from=build /home/gradle/src/build/resources/main/lib/* .
 
-# # ENTRYPOINT ["/bin/sh", "-c", "start-docker.sh"]
+RUN addgroup -S app && adduser -S -G app app
+
+RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g" /etc/apk/repositories; \
+    apk add --no-cache libstdc++
+
+USER app
+
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/app"
+
+ENTRYPOINT [ "java", "-jar", "-Djava.library.path=/app", "/app/java-scip-0.0.1-SNAPSHOT.jar" ]
