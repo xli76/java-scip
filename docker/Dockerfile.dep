@@ -1,11 +1,11 @@
-FROM openjdk:8-alpine
+FROM openjdk:8-alpine as java-scip
 
 RUN addgroup -S app && adduser -S -G app app
 
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g" /etc/apk/repositories; \
     apk add --no-cache gcc g++ cmake make
 
-ADD scipoptsuite-7.0.2.tgz /scip
+ADD docker/scipoptsuite-7.0.2.tgz /scip
 WORKDIR /scip/scipoptsuite-7.0.2
 
 RUN mkdir build; \
@@ -13,7 +13,7 @@ RUN mkdir build; \
     cmake ..; \
     make -j4
 
-COPY JSCIPOpt-master.zip /scip
+COPY docker/JSCIPOpt-master.zip /scip
 WORKDIR /scip
 
 RUN unzip JSCIPOpt-master.zip; \
@@ -23,9 +23,4 @@ RUN unzip JSCIPOpt-master.zip; \
     cmake .. -DSCIP_DIR=/scip/scipoptsuite-7.0.2/build; \
     make -j4
 
-ENV LD_LIBRARY_PATH="/scip/JSCIPOpt-master/build/Release:${LD_LIBRARY_PATH}"
-
 USER app
-
-WORKDIR /scip/JSCIPOpt-master/build/Release
-ENTRYPOINT ["java", "-cp", "scip.jar:examples.jar", "Linear"]

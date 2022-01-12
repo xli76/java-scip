@@ -1,10 +1,14 @@
 services:
-#  java-app:
-#    build:
-#      context: .
-#      dockerfile: docker/Dockerfile.app
+ java-app:
+   build:
+     context: .
+     dockerfile: docker/Dockerfile.app
+   ports:
+     - "8080:8080"
 
-  scip-dep:
-    build:
-      context: docker/dep
-      dockerfile: Dockerfile.dep
+#   scip-dep:
+#     build:
+#       context: .
+#       dockerfile: docker/Dockerfile.dep
+# #    volumes:
+# #      - src/main/resources/lib:/var/lib
