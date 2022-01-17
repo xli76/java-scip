@@ -1,11 +1,15 @@
 services:
- java-app:
-   build:
-     context: .
-     dockerfile: docker/Dockerfile.app
-   ports:
-     - "8080:8080"
-
+  # java-app:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/Dockerfile.app
+  #   ports:
+  #    - "8080:8080"
+  
+  env:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.env
 #   scip-dep:
 #     build:
 #       context: .
