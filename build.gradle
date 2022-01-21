@@ -45,10 +45,41 @@ test {
 	useJUnitPlatform()
 }
 
+// tasks.withType(JavaExec) {
+// 	systemProperty "java.library.path", "src/main/resources/lib"
+// }
+
+// tasks.withType(Test) {
+// 	systemProperty "java.library.path", "src/main/resources/lib"
+// }
+
+import org.gradle.internal.os.OperatingSystem;
+
+def getOsName(project) {
+    if (OperatingSystem.current().isMacOsX()) {
+        return "macosx"
+    } else if (OperatingSystem.current().isLinux()) {
+        return "centos"
+    }
+    return "unix"
+}
+
+def getOsArch(project) {
+    String arch = OperatingSystem.current().getArch()
+    if ("aarch64" == arch) {
+        return "arm64"
+    }
+    return arch
+}
+
 tasks.withType(JavaExec) {
-	systemProperty "java.library.path", "src/main/resources/lib"
+    String osName = getOsName()
+    String osArch = getOsArch()
+    systemProperty "java.library.path", "src/main/resources/lib/$osName/$osArch"
 }
 
 tasks.withType(Test) {
-	systemProperty "java.library.path", "src/main/resources/lib"
+    String osName = getOsName()
+    String osArch = getOsArch()
+    systemProperty "java.library.path", "src/main/resources/lib/$osName/$osArch"
 }
