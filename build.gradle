@@ -53,21 +53,23 @@ test {
 // 	systemProperty "java.library.path", "src/main/resources/lib"
 // }
 
-import org.gradle.internal.os.OperatingSystem;
+import org.gradle.internal.os.OperatingSystem
 
-def getOsName(project) {
+def getOsName() {
     if (OperatingSystem.current().isMacOsX()) {
         return "macosx"
     } else if (OperatingSystem.current().isLinux()) {
-        return "centos"
+        return "linux"
     }
     return "unix"
 }
 
-def getOsArch(project) {
-    String arch = OperatingSystem.current().getArch()
+def getOsArch() {
+    String arch = System.getProperty("os.arch")
     if ("aarch64" == arch) {
         return "arm64"
+    } else if ("i386" == arch || "amd64" == arch || "x86_64" == arch) {
+        return "x86"
     }
     return arch
 }
@@ -75,11 +77,13 @@ def getOsArch(project) {
 tasks.withType(JavaExec) {
     String osName = getOsName()
     String osArch = getOsArch()
-    systemProperty "java.library.path", "src/main/resources/lib/$osName/$osArch"
+    systemProperty "java.library.path", "${project.projectDir}/src/main/resources/lib/$osName/$osArch"
+    // systemProperty "java.library.path", "src/main/resources/lib/$osName/$osArch"
 }
 
 tasks.withType(Test) {
     String osName = getOsName()
     String osArch = getOsArch()
-    systemProperty "java.library.path", "src/main/resources/lib/$osName/$osArch"
+    systemProperty "java.library.path", "${project.projectDir}/src/main/resources/lib/$osName/$osArch"
+    // systemProperty "java.library.path", "src/main/resources/lib/$osName/$osArch"
 }

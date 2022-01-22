@@ -1,0 +1,13 @@
+# cache
+config-cache
+.gradle
+.idea
+.log
+# build files
+bulid
+*/build
+# source files
+docker/*.zip
+docker/*.tgz
+# dylib
+**/*.dylib

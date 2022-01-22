@@ -24,16 +24,16 @@ build_jni() {
     docker create --name extract allocate:java-scip
 
     platform_dir="`system_arch ${platform}`"
-    docker cp extract:/scip/JSCIPOpt-master/build/Release/scip.jar algo-model-allocation-service/src/main/resources/lib/
-    docker cp extract:/scip/JSCIPOpt-master/build/Release/libjscip.so algo-model-allocation-service/src/main/resources/lib/${os}/${platform_dir}/
-    docker cp extract:/scip/scipoptsuite-7.0.2/build/lib/libscip.so.7.0.2.0 algo-model-allocation-service/src/main/resources/lib/${os}/${platform_dir}/
-    mv algo-model-allocation-service/src/main/resources/lib/${os}/${platform_dir}/libscip.so.7.0.2.0 algo-model-allocation-service/src/main/resources/lib/${os}/${platform_dir}/libscip.so.7.0
+#    docker cp extract:/scip/JSCIPOpt-master/build/Release/scip.jar src/main/resources/lib/
+    docker cp extract:/scip/JSCIPOpt-master/build/Release/libjscip.so src/main/resources/lib/${os}/${platform_dir}/
+    docker cp extract:/scip/scipoptsuite-7.0.2/build/lib/libscip.so.7.0.2.0 src/main/resources/lib/${os}/${platform_dir}/
+    mv src/main/resources/lib/${os}/${platform_dir}/libscip.so.7.0.2.0 src/main/resources/lib/${os}/${platform_dir}/libscip.so.7.0
     docker rm -f extract
 
     echo Finished
 }
 
 # intel chip
-build_jni centos linux/amd64
+build_jni alpine linux/amd64
 # # m1 chip
 # build_jni centos linux/arm64

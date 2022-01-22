@@ -1,17 +1,16 @@
 services:
-  java-app-arm64:
-    platform: linux/arm64
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.app
-    ports:
-     - "8080:8080"
-  
+#  java-app-arm64:
+#    platform: linux/arm64
+#    build:
+#      context: .
+#      dockerfile: docker/Dockerfile.app.alpine
+#    ports:
+#     - "8080:8080"
   java-app-amd64:
     platform: linux/amd64
     build:
       context: .
-      dockerfile: docker/Dockerfile.app
+      dockerfile: docker/Dockerfile.app.alpine
     ports:
      - "8080:8080"
   
@@ -22,6 +21,6 @@ services:
 #   scip-dep:
 #     build:
 #       context: .
-#       dockerfile: docker/Dockerfile.dep
+#       dockerfile: docker/Dockerfile.dep.alpine
 # #    volumes:
 # #      - src/main/resources/lib:/var/lib
