@@ -3,7 +3,7 @@ import jscip.*;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ScipSolver {
+public class ScipSolver implements Solver {
     static {
         // load generated C-library
         System.loadLibrary("jscip");
