@@ -1,8 +1,10 @@
 package com.example.javascip;
 import jscip.*;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class ScipSolver implements Solver {
     static {
         // load generated C-library
